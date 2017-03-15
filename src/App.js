@@ -8,7 +8,7 @@ import defaultPicture from './components/img/default.jpg'
 
 const Materialize = window.Materialize
 
-const APP_TITLE = 'Awesome App'
+const APP_TITLE = 'News App'
 //update document title (displayed in the opened browser tab)
 document.title = APP_TITLE
 
@@ -52,9 +52,9 @@ class App extends Component {
                     </div>
 
                     <div className="row" style={ { marginTop: 20 } } >
-                        <div className="col s12 m6 offset-m3">
-                            { this.displayNews() }
-                        </div>
+
+                        { this.getCards() }
+
                     </div>
                 </div>
 
@@ -76,11 +76,11 @@ class App extends Component {
                 //YOU NEED TO PROVIDE YOUR "APIXU" API KEY HERE, see /utils/api.js file to grab the DOCUMENTATION file
                 apiKey: NEWS_API_KEY,
                 source: 'techcrunch'
-            } )
+            })
 
             this.setState( {
                 news: _news
-            } )
+            })
 
         }
         catch ( error ) {
@@ -92,10 +92,9 @@ class App extends Component {
 
 
     //handle display of the received news object
-    displayNews = () => {
+    getCards = () => {
+
         const news = this.state.news
-
-
         /*data looks like that
 
             {
@@ -131,20 +130,22 @@ class App extends Component {
             }
             */
 
-
         if ( news ) {
-
             console.log( news )
 
-            const _title = news.articles[ 0 ].title
 
-            return (
-                <NewsCard picture={ defaultPicture } text={ 'hey' } title={ _title }
-                />
+
+            return news.articles.map(
+                article => {
+                    return (
+                        <NewsCard picture={ article.urlToImage } text={ article.description } title={ article.title } url={ article.url } />
+                    )
+                }
             )
         }
 
-        return null
+
+
     }
 
 }
