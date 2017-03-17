@@ -13,13 +13,16 @@ class NewsCard extends Component {
 
             <div className="col s12 m6">
                 <div className="card">
-                    <div className="card-image">
-                        <img src={ picture } />
-                        <span className="card-title"> { title }</span>
-                        <a href={ url } target="_blank" className="btn-floating halfway-fab waves-effect waves-light cyan"><i className="material-icons">add</i></a>
+                    <div className="card-pannel hoverable">
+
+                        <div className="card-image">
+                            <img src={ picture } />
+                            <span className="card-title"> { title }</span>
+                            <a href={ url } target="_blank" className="btn-floating halfway-fab waves-effect waves-light #222 "><i className="material-icons">add</i></a>
+                        </div>
+                        <div className="card-content">
+                            <p> { text }</p> </div>
                     </div>
-                    <div className="card-content">
-                        <p> { text }</p> </div>
                 </div>
             </div>
 

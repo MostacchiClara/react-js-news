@@ -26,6 +26,7 @@ class App extends Component {
         super( props )
         this.state = {
             news: undefined,
+            search: '',
         }
     }
 
@@ -46,7 +47,10 @@ class App extends Component {
                             <button type="submit" className="waves-effect waves-light btn">
                                 Get some news!
                             </button>
-
+                            <div className="input-field s12">
+                                <input id="recherche" type="text" class="validate" value={ this.state.search } onChange={ this.handleChange } />
+                                <label for="recherche"> Search some news </label>
+                            </div>
                         </form>
 
                     </div>
@@ -65,6 +69,9 @@ class App extends Component {
 
     //method triggered by onSubmit event of the form or by onClick event of the "Get some news!" button
     /* Arrow function syntax used for Autobinding, see details here : https://facebook.github.io/react/docs/react-without-es6.html#autobinding */
+    handleChange = ( event ) => {
+        this.setState( { search: event.target.value });
+    }
     fetchNews = async ( event ) => {
 
         event.preventDefault()
@@ -81,6 +88,8 @@ class App extends Component {
             this.setState( {
                 news: _news
             })
+
+
 
         }
         catch ( error ) {
@@ -135,13 +144,16 @@ class App extends Component {
 
 
 
-            return news.articles.map(
+            return news.articles.filter( article => {
+                return article.title.toLowerCase().indexOf( this.state.search.toLowerCase() ) != -1
+            }).map(
                 article => {
+
                     return (
                         <NewsCard picture={ article.urlToImage } text={ article.description } title={ article.title } url={ article.url } />
                     )
                 }
-            )
+                )
         }
 
 
