@@ -14,6 +14,10 @@ document.title = APP_TITLE
 
 //web api utils
 import { get, ENDPOINTS, NEWS_API_KEY } from './utils/api'
+import { getNews, addNews } from './utils/webstorage'
+
+
+
 
 //components
 import NewsCard from './components/NewsCard'
@@ -47,7 +51,7 @@ class App extends Component {
                             <button type="submit" className="waves-effect waves-light btn">
                                 Get some news!
                             </button>
-                            <div className="input-field s12">
+                            <div className="input-field ">
                                 <input id="recherche" type="text" class="validate" value={ this.state.search } onChange={ this.handleChange } />
                                 <label for="recherche"> Search some news </label>
                             </div>
@@ -79,6 +83,7 @@ class App extends Component {
         /* ASYNC - AWAIT DOCUMENTATION : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/await */
 
         try {
+            addNews( this.state.search )
             let _news = await get( ENDPOINTS.NEWS_API_URL, {
                 //YOU NEED TO PROVIDE YOUR "APIXU" API KEY HERE, see /utils/api.js file to grab the DOCUMENTATION file
                 apiKey: NEWS_API_KEY,
